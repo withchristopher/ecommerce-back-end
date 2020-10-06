@@ -60,6 +60,7 @@ router.post('/', (req, res) => {
             price: req.body.price,
             stock: req.body.stock,
             tagId: req.body.tagIds,
+            category_id: req.body.category_id,
             include: {
                 model: 'product_tag',
                 attributes: ['tag_id'],
@@ -136,7 +137,9 @@ router.delete('/:id', (req, res) => {
         }).then(dbProductData => {
             if (!dbProductData) {
                 res.status(404).json({ message: 'No product found with this id' });
+                return;
             }
+            res.json(dbProductData);
         })
         .catch(err => {
             console.log(err);
